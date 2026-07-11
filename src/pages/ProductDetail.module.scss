@@ -1,0 +1,254 @@
+.page {
+  padding: 28px 0 90px;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.84rem;
+  color: var(--dim);
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+
+  a:hover {
+    color: var(--accent);
+  }
+  b {
+    color: var(--text);
+    font-weight: 600;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+.coverWrap {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.info {
+  min-width: 0;
+}
+
+.cat {
+  display: inline-block;
+  font-family: var(--fd);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+}
+
+.title {
+  font-family: var(--fd);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 16px 0 0;
+}
+
+.author {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  b {
+    color: var(--text);
+    font-family: var(--fd);
+    font-weight: 700;
+  }
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--dim);
+}
+
+.desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-top: 22px;
+}
+
+.formats {
+  margin-top: 24px;
+}
+
+.formatsLabel,
+.tags {
+  display: block;
+}
+
+.formatsLabel {
+  font-family: var(--fd);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-family: var(--fd);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.tag {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.buy {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid var(--hair);
+}
+
+.price {
+  font-family: var(--fd);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--text);
+}
+
+.add {
+  flex: 1;
+  padding: 15px 24px;
+  border-radius: 13px;
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #150109;
+  background: var(--accent);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.32);
+  transition: filter 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.related {
+  margin-top: 72px;
+
+  h2 {
+    font-family: var(--fd);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
+  }
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.notFound {
+  padding: 120px 0;
+  text-align: center;
+
+  h1 {
+    font-family: var(--fd);
+    font-weight: 800;
+    font-size: 2rem;
+  }
+  p {
+    color: var(--muted);
+    margin: 12px 0 24px;
+  }
+}
+
+.back {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .coverWrap {
+    position: static;
+  }
+  .relatedGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+  .buy {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

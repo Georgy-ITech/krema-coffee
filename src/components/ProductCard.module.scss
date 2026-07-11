@@ -1,0 +1,156 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.32s var(--ease), border-color 0.32s ease, box-shadow 0.32s ease;
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+.coverLink {
+  display: block;
+}
+
+.cover {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+
+  .card:hover & .svg {
+    transform: scale(1.05);
+  }
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s var(--ease);
+}
+
+.cat,
+.free {
+  position: absolute;
+  top: 12px;
+  font-family: var(--fd);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+.cat {
+  left: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.free {
+  right: 12px;
+  color: #06110b;
+  background: var(--ok);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px 18px;
+  gap: 6px;
+  flex: 1;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+
+  a:hover {
+    color: var(--accent);
+  }
+}
+
+.price {
+  font-family: var(--fd);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.author {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--fd);
+  font-size: 0.8rem;
+  color: var(--muted);
+
+  b {
+    color: var(--text);
+    font-weight: 700;
+  }
+}
+
+.sales {
+  font-size: 0.78rem;
+  color: var(--dim);
+}
+
+.add {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #150109;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
