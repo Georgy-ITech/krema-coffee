@@ -12,6 +12,15 @@
   animation: marquee linear infinite;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .item {
   display: inline-flex;
   align-items: center;

@@ -9,16 +9,14 @@ import RoastMeter from './RoastMeter';
 import Stars from './Stars';
 import styles from './ProductCard.module.scss';
 
-export default function ProductCard({ product, index }: { product: Product; index?: number }) {
+export default function ProductCard({ product }: { product: Product }) {
   const { add } = useCart();
-  const num = index != null ? String(index + 1).padStart(2, '0') : null;
 
   return (
     <article className={styles.card}>
       <Link to={`/product/${product.id}`} className={styles.coverLink} aria-label={product.title}>
         <div className={styles.cover}>
           <img className={styles.img} src={product.image} alt={product.title} loading="lazy" />
-          {num && <span className={styles.num}>{num}</span>}
           <span className={styles.cat}>{categoryLabel(product.category)}</span>
           {product.roast && (
             <div className={styles.roast}>

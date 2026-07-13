@@ -36,7 +36,7 @@ export default function Info() {
 
       <div className={styles.blocks}>
         {page.blocks.map((b, i) => (
-          <section key={i} className={styles.block}>
+          <section key={i} id={b.id} className={styles.block}>
             {b.h && <h2>{b.h}</h2>}
             {b.p && <p>{b.p}</p>}
             {b.list && (

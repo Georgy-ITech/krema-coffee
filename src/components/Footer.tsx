@@ -23,14 +23,14 @@ export default function Footer() {
           <div>
             <h5>Компания</h5>
             <Link to="/info/about">Как обжариваем</Link>
-            <Link to="/info/about">О нас</Link>
-            <Link to="/info/about">Оптом</Link>
+            <Link to="/info/about#wholesale">Оптом</Link>
+            <Link to="/info/contacts">Контакты</Link>
           </div>
           <div>
             <h5>Помощь</h5>
             <Link to="/info/delivery">Доставка</Link>
-            <Link to="/info/delivery">Оплата</Link>
-            <Link to="/info/delivery">Контакты</Link>
+            <Link to="/info/delivery#pay">Оплата</Link>
+            <Link to="/info/delivery#fresh">Свежесть</Link>
           </div>
         </div>
       </div>

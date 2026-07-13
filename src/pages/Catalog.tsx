@@ -50,8 +50,8 @@ export default function Catalog() {
 
           {results.length > 0 ? (
             <div className={styles.grid}>
-              {results.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} />
+              {results.map((p) => (
+                <ProductCard key={p.id} product={p} />
               ))}
             </div>
           ) : (
