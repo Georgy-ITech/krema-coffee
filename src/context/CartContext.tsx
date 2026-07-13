@@ -1,32 +1,54 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
+import type { Grind } from '../data/products';
 
-export type CartItems = Record<string, number>; // productId -> qty
+// Позиция корзины = товар + вариант (помол, вес). Ключ: "productId|grind|weightG".
+export type CartItems = Record<string, number>;
+
+export interface CartVariant {
+  grind?: Grind;
+  weightG?: number;
+}
+
+export interface CartLineKey extends CartVariant {
+  productId: string;
+}
+
+export const makeKey = (productId: string, v?: CartVariant): string =>
+  `${productId}|${v?.grind ?? ''}|${v?.weightG ?? ''}`;
+
+export function parseKey(key: string): CartLineKey {
+  const [productId, grind, weightG] = key.split('|');
+  return {
+    productId,
+    grind: (grind || undefined) as Grind | undefined,
+    weightG: weightG ? Number(weightG) : undefined,
+  };
+}
 
 type Action =
-  | { type: 'add'; id: string }
-  | { type: 'remove'; id: string }
-  | { type: 'setQty'; id: string; qty: number }
+  | { type: 'add'; key: string }
+  | { type: 'remove'; key: string }
+  | { type: 'setQty'; key: string; qty: number }
   | { type: 'clear' };
 
-const STORAGE_KEY = 'overlay-cart';
+// v2: ключи с вариантами (несовместимо со старым форматом)
+const STORAGE_KEY = 'krema-cart-v2';
 
 function reducer(state: CartItems, action: Action): CartItems {
   switch (action.type) {
-    case 'add': {
-      const qty = (state[action.id] ?? 0) + 1;
-      return { ...state, [action.id]: qty };
-    }
+    case 'add':
+      return { ...state, [action.key]: (state[action.key] ?? 0) + 1 };
     case 'setQty': {
       if (action.qty <= 0) {
         const next = { ...state };
-        delete next[action.id];
+        delete next[action.key];
         return next;
       }
-      return { ...state, [action.id]: action.qty };
+      return { ...state, [action.key]: action.qty };
     }
     case 'remove': {
       const next = { ...state };
-      delete next[action.id];
+      delete next[action.key];
       return next;
     }
     case 'clear':
@@ -49,9 +71,9 @@ function init(): CartItems {
 interface CartValue {
   items: CartItems;
   count: number;
-  add: (id: string) => void;
-  remove: (id: string) => void;
-  setQty: (id: string, qty: number) => void;
+  add: (productId: string, variant?: CartVariant) => void;
+  remove: (key: string) => void;
+  setQty: (key: string, qty: number) => void;
   clear: () => void;
 }
 
@@ -64,7 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch {
-      /* storage unavailable — cart stays in-memory */
+      /* storage недоступен — корзина живёт в памяти */
     }
   }, [items]);
 
@@ -73,9 +95,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return {
       items,
       count,
-      add: (id) => dispatch({ type: 'add', id }),
-      remove: (id) => dispatch({ type: 'remove', id }),
-      setQty: (id, qty) => dispatch({ type: 'setQty', id, qty }),
+      add: (productId, variant) => dispatch({ type: 'add', key: makeKey(productId, variant) }),
+      remove: (key) => dispatch({ type: 'remove', key }),
+      setQty: (key, qty) => dispatch({ type: 'setQty', key, qty }),
       clear: () => dispatch({ type: 'clear' }),
     };
   }, [items]);

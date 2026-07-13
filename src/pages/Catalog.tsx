@@ -1,24 +1,23 @@
+import Hero from '../components/Hero';
+import Marquee from '../components/Marquee';
 import FilterSidebar from '../components/FilterSidebar';
 import ProductCard from '../components/ProductCard';
 import { SORTS, useFilters, type SortKey } from '../hooks/useFilters';
+import { plural } from '../lib/format';
 import styles from './Catalog.module.scss';
+
+const ORIGINS = ['Эфиопия', 'Кения', 'Колумбия', 'Бразилия', 'Гватемала', 'Перу', 'Свежая обжарка'];
 
 export default function Catalog() {
   const { state, set, toggleCategory, reset, results, activeCount } = useFilters();
 
   return (
     <>
-      <section className={styles.hero}>
-        <div className="wrap">
-          <span className={styles.eyebrow}>Creative assets marketplace</span>
-          <h1 className={styles.title}>
-            Ship faster with <span className={styles.g}>ready-made</span> design.
-          </h1>
-          <p className={styles.sub}>
-            UI kits, icon sets, presets, fonts and 3D — handpicked, production-ready, and yours in one click.
-          </p>
-        </div>
-      </section>
+      <Hero />
+
+      <div className={styles.strip}>
+        <Marquee items={ORIGINS} />
+      </div>
 
       <section className={`wrap ${styles.layout}`} id="catalog">
         <FilterSidebar
@@ -31,11 +30,11 @@ export default function Catalog() {
 
         <div className={styles.main}>
           <div className={styles.toolbar}>
-            <span className={styles.resultCount}>
-              <b>{results.length}</b> {results.length === 1 ? 'asset' : 'assets'}
-            </span>
+            <h2 className={styles.heading}>
+              Каталог<span> · {results.length} {plural(results.length, ['товар', 'товара', 'товаров'])}</span>
+            </h2>
             <label className={styles.sort}>
-              <span>Sort</span>
+              <span>Сортировка</span>
               <select value={state.sort} onChange={(e) => set('sort', e.target.value as SortKey)}>
                 {SORTS.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -51,15 +50,15 @@ export default function Catalog() {
 
           {results.length > 0 ? (
             <div className={styles.grid}>
-              {results.map((p) => (
-                <ProductCard key={p.id} product={p} />
+              {results.map((p, i) => (
+                <ProductCard key={p.id} product={p} index={i} />
               ))}
             </div>
           ) : (
             <div className={styles.empty}>
-              <h3>No assets match those filters</h3>
-              <p>Try widening the price range or clearing a category.</p>
-              <button onClick={reset}>Clear all filters</button>
+              <h3>Ничего не найдено</h3>
+              <p>Попробуйте расширить диапазон цены или снять фильтр по обжарке.</p>
+              <button onClick={reset}>Сбросить фильтры</button>
             </div>
           )}
         </div>

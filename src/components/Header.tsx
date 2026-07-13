@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import BeanMark from './BeanMark';
 import styles from './Header.module.scss';
 
 interface Props {
@@ -15,21 +16,25 @@ export default function Header({ theme, onToggleTheme, onOpenCart }: Props) {
     <header className={styles.header}>
       <div className={`wrap ${styles.inner}`}>
         <Link to="/" className={styles.brand}>
-          <span className={styles.mark}>O</span>
-          Overlay
+          <BeanMark className={styles.mark} />
+          <span className={styles.word}>
+            КРЕМА
+            <small>обжарщики кофе</small>
+          </span>
         </Link>
 
-        <nav className={styles.nav} aria-label="Primary">
-          <a href="#catalog">Browse</a>
-          <a href="#catalog">Categories</a>
-          <a href="#catalog">Authors</a>
+        <nav className={styles.nav} aria-label="Основная навигация">
+          <Link to="/#catalog">Каталог</Link>
+          <Link to="/?cat=sets#catalog">Наборы</Link>
+          <Link to="/info/about">Обжарка</Link>
+          <Link to="/info/delivery">Доставка</Link>
         </nav>
 
         <div className={styles.actions}>
           <button
             className={styles.icon}
             onClick={onToggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
           >
             {theme === 'dark' ? (
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,13 +48,13 @@ export default function Header({ theme, onToggleTheme, onOpenCart }: Props) {
             )}
           </button>
 
-          <button className={styles.cart} onClick={onOpenCart} aria-label={`Open cart, ${count} items`}>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <button className={styles.cart} onClick={onOpenCart} aria-label={`Открыть корзину, товаров: ${count}`}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="20" r="1.4" />
               <circle cx="18" cy="20" r="1.4" />
               <path d="M2 3h2.2l2.3 12.4a1.6 1.6 0 0 0 1.6 1.3h8.5a1.6 1.6 0 0 0 1.6-1.3L21 7H6" />
             </svg>
-            <span>Cart</span>
+            <span>Корзина</span>
             {count > 0 && <span className={styles.badge}>{count}</span>}
           </button>
         </div>

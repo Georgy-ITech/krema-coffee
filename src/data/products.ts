@@ -1,295 +1,342 @@
-export type Category = 'ui-kits' | 'icons' | 'presets' | 'fonts' | '3d' | 'wallpapers';
+export type Category = 'beans' | 'drip' | 'equipment' | 'sets';
+export type Roast = 'light' | 'medium' | 'dark';
+export type Method = 'espresso' | 'filter' | 'universal';
+export type Grind = 'whole' | 'espresso' | 'filter' | 'turkish' | 'geyser';
+export type Process = 'washed' | 'natural' | 'honey';
+
+export interface WeightOption {
+  g: number;
+  price: number;
+}
+
+export interface FlavorProfile {
+  acidity: number; // 1–5
+  body: number; // 1–5
+  sweetness: number; // 1–5
+}
 
 export interface Product {
   id: string;
   title: string;
-  author: string;
+  origin: string; // страна / регион или тип
   category: Category;
-  price: number; // 0 = free
-  rating: number; // 0–5, one decimal
+  roast?: Roast;
+  method?: Method;
+  price: number; // базовая цена, ₽ (для зерна — 250 г)
+  weights?: WeightOption[]; // варианты веса (зерно)
+  grinds?: Grind[]; // доступные помолы (зерно)
+  roastDate?: string; // ISO — последняя обжарка
+  profile?: FlavorProfile; // шкалы вкуса
+  process?: Process; // обработка
+  altitude?: string; // высота произрастания
+  producer?: string; // ферма / кооператив
+  description?: string; // 2–4 предложения о вкусе
+  rating: number;
   sales: number;
-  createdAt: string; // ISO date, drives "newest"
-  tags: string[];
-  formats: string[];
-  colors: [string, string]; // cover gradient stops
+  createdAt: string; // ISO — сортировка «новинки»
+  weight?: string; // отображаемый вес (дрип/наборы)
+  tags: string[]; // ноты вкуса / признаки — идут в поиск и на карточку
+  image: string;
   featured?: boolean;
 }
 
 export const CATEGORIES: { id: Category; label: string }[] = [
-  { id: 'ui-kits', label: 'UI Kits' },
-  { id: 'icons', label: 'Icon Sets' },
-  { id: 'presets', label: 'Presets' },
-  { id: 'fonts', label: 'Fonts' },
-  { id: '3d', label: '3D Packs' },
-  { id: 'wallpapers', label: 'Wallpapers' },
+  { id: 'beans', label: 'Зерно' },
+  { id: 'drip', label: 'Дрип-пакеты' },
+  { id: 'equipment', label: 'Техника' },
+  { id: 'sets', label: 'Наборы' },
+];
+
+export const ROASTS: { id: Roast; label: string }[] = [
+  { id: 'light', label: 'Светлая' },
+  { id: 'medium', label: 'Средняя' },
+  { id: 'dark', label: 'Тёмная' },
+];
+
+export const GRINDS: { id: Grind; label: string }[] = [
+  { id: 'whole', label: 'В зёрнах' },
+  { id: 'espresso', label: 'Эспрессо' },
+  { id: 'filter', label: 'Фильтр' },
+  { id: 'turkish', label: 'Турка' },
+  { id: 'geyser', label: 'Гейзер' },
 ];
 
 export const categoryLabel = (id: Category): string =>
   CATEGORIES.find((c) => c.id === id)?.label ?? id;
 
+export const roastLabel = (id?: Roast): string =>
+  id ? (ROASTS.find((r) => r.id === id)?.label ?? id) + ' обжарка' : '';
+
+export const methodLabel = (m?: Method): string =>
+  m === 'espresso' ? 'Эспрессо' : m === 'filter' ? 'Фильтр' : m === 'universal' ? 'Универсальный' : '';
+
+export const grindLabel = (g?: Grind): string =>
+  g ? (GRINDS.find((x) => x.id === g)?.label ?? g) : '';
+
+export const processLabel = (p?: Process): string =>
+  p === 'washed' ? 'Мытая обработка' : p === 'natural' ? 'Натуральная обработка' : p === 'honey' ? 'Хани-обработка' : '';
+
+const BEAN_GRINDS: Grind[] = ['whole', 'espresso', 'filter', 'turkish', 'geyser'];
+// 1000 г ≈ ×3.6 от цены 250 г, округляем до десятков
+const w = (base: number): WeightOption[] => [
+  { g: 250, price: base },
+  { g: 1000, price: Math.round((base * 3.6) / 10) * 10 },
+];
+
 export const products: Product[] = [
   {
-    id: 'aurora-ui',
-    title: 'Aurora Dashboard Kit',
-    author: 'Nova Studio',
-    category: 'ui-kits',
-    price: 48,
+    id: 'ethiopia-yirgacheffe',
+    title: 'Эфиопия Иргачефф',
+    origin: 'Эфиопия · регион Йиргачефф',
+    category: 'beans',
+    roast: 'light',
+    method: 'filter',
+    price: 940,
+    weights: w(940),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-07-07',
+    profile: { acidity: 5, body: 2, sweetness: 4 },
+    process: 'washed',
+    altitude: '1900–2200 м',
+    producer: 'кооператив Konga',
+    description:
+      'Классика светлой обжарки: сок цитруса, жасмин и чайная лёгкость. В воронке раскрывается ярче всего — берите под фильтр и наслаждайтесь длинным сладким послевкусием.',
     rating: 4.9,
-    sales: 3120,
+    sales: 1840,
     createdAt: '2026-06-28',
-    tags: ['dashboard', 'dark', 'figma'],
-    formats: ['Figma', 'Sketch'],
-    colors: ['#ff2d78', '#b45cff'],
+    tags: ['цитрус', 'жасмин', 'фильтр'],
+    image: '/img/c8.jpg',
     featured: true,
   },
   {
-    id: 'lumen-icons',
-    title: 'Lumen Line Icons — 620',
-    author: 'Pixelforge',
-    category: 'icons',
-    price: 24,
+    id: 'kenya-aa',
+    title: 'Кения AA',
+    origin: 'Кения · Ньери',
+    category: 'beans',
+    roast: 'light',
+    method: 'filter',
+    price: 990,
+    weights: w(990),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-07-07',
+    profile: { acidity: 5, body: 3, sweetness: 3 },
+    process: 'washed',
+    altitude: '1700–1900 м',
+    producer: 'фабрика Gatomboya',
+    description:
+      'Сортировка AA — самое крупное зерно лота. Плотная ягодная кислотность, чёрная смородина и томатная сладость. Кофе с характером: для тех, кто любит ярко.',
     rating: 4.8,
-    sales: 5410,
-    createdAt: '2026-05-14',
-    tags: ['line', 'outline', 'svg'],
-    formats: ['SVG', 'Figma', 'Icon Font'],
-    colors: ['#00c8ff', '#5b8cff'],
-  },
-  {
-    id: 'noir-preset',
-    title: 'Noir Cinematic Presets',
-    author: 'Grainlab',
-    category: 'presets',
-    price: 19,
-    rating: 4.7,
-    sales: 2280,
-    createdAt: '2026-06-02',
-    tags: ['moody', 'film', 'lightroom'],
-    formats: ['LR', 'ACR', 'Mobile'],
-    colors: ['#8a8f98', '#2b2f3a'],
-  },
-  {
-    id: 'grotesk-x',
-    title: 'Grotesk X Variable',
-    author: 'Type Foundry Nine',
-    category: 'fonts',
-    price: 39,
-    rating: 5.0,
-    sales: 1740,
-    createdAt: '2026-06-19',
-    tags: ['variable', 'display', 'sans'],
-    formats: ['OTF', 'WOFF2', 'Variable'],
-    colors: ['#ffd23f', '#ff7a3d'],
-    featured: true,
-  },
-  {
-    id: 'volume-3d',
-    title: 'Volume — Abstract 3D Pack',
-    author: 'Renderhaus',
-    category: '3d',
-    price: 54,
-    rating: 4.6,
-    sales: 980,
-    createdAt: '2026-06-25',
-    tags: ['blender', 'abstract', 'render'],
-    formats: ['Blend', 'PNG', 'OBJ'],
-    colors: ['#b45cff', '#00e5c3'],
-  },
-  {
-    id: 'nebula-walls',
-    title: 'Nebula Gradient Wallpapers',
-    author: 'Deepfield',
-    category: 'wallpapers',
-    price: 0,
-    rating: 4.5,
-    sales: 8600,
-    createdAt: '2026-05-30',
-    tags: ['gradient', '4k', 'desktop'],
-    formats: ['4K', '5K', 'Mobile'],
-    colors: ['#ff2d78', '#00c8ff'],
-  },
-  {
-    id: 'orbit-ui',
-    title: 'Orbit Mobile App Kit',
-    author: 'Nova Studio',
-    category: 'ui-kits',
-    price: 42,
-    rating: 4.8,
-    sales: 2650,
-    createdAt: '2026-04-21',
-    tags: ['mobile', 'ios', 'figma'],
-    formats: ['Figma'],
-    colors: ['#00e5c3', '#00c8ff'],
-  },
-  {
-    id: 'glyph-duo',
-    title: 'Glyph Duotone Icons — 340',
-    author: 'Pixelforge',
-    category: 'icons',
-    price: 0,
-    rating: 4.4,
-    sales: 6120,
-    createdAt: '2026-03-18',
-    tags: ['duotone', 'svg', 'free'],
-    formats: ['SVG', 'Figma'],
-    colors: ['#ff7a3d', '#ff2d78'],
-  },
-  {
-    id: 'sunfade-preset',
-    title: 'Sunfade Warm Presets',
-    author: 'Grainlab',
-    category: 'presets',
-    price: 15,
-    rating: 4.6,
-    sales: 3340,
-    createdAt: '2026-06-11',
-    tags: ['warm', 'travel', 'lightroom'],
-    formats: ['LR', 'Mobile'],
-    colors: ['#ffd23f', '#ff2d78'],
-  },
-  {
-    id: 'mono-serif',
-    title: 'Mono Serif Editorial',
-    author: 'Type Foundry Nine',
-    category: 'fonts',
-    price: 29,
-    rating: 4.7,
     sales: 1210,
-    createdAt: '2026-05-05',
-    tags: ['serif', 'editorial', 'display'],
-    formats: ['OTF', 'WOFF2'],
-    colors: ['#e8e2d6', '#8a8f98'],
+    createdAt: '2026-06-12',
+    tags: ['чёрная смородина', 'ягоды', 'фильтр'],
+    image: '/img/c1.jpg',
   },
   {
-    id: 'prism-3d',
-    title: 'Prism Glass 3D Shapes',
-    author: 'Renderhaus',
-    category: '3d',
-    price: 36,
-    rating: 4.9,
-    sales: 1560,
-    createdAt: '2026-06-30',
-    tags: ['glass', 'iridescent', 'render'],
-    formats: ['PNG', 'Blend'],
-    colors: ['#b45cff', '#ff2d78'],
-    featured: true,
-  },
-  {
-    id: 'dawn-walls',
-    title: 'Dawn Mesh Wallpapers',
-    author: 'Deepfield',
-    category: 'wallpapers',
-    price: 9,
-    rating: 4.3,
-    sales: 2040,
-    createdAt: '2026-04-09',
-    tags: ['mesh', '4k', 'soft'],
-    formats: ['4K', 'Mobile'],
-    colors: ['#00e5c3', '#b45cff'],
-  },
-  {
-    id: 'stack-ui',
-    title: 'Stack Landing Blocks',
-    author: 'Blockwork',
-    category: 'ui-kits',
-    price: 34,
-    rating: 4.5,
-    sales: 1890,
-    createdAt: '2026-05-22',
-    tags: ['landing', 'blocks', 'figma'],
-    formats: ['Figma', 'HTML'],
-    colors: ['#5b8cff', '#b45cff'],
-  },
-  {
-    id: 'pulse-icons',
-    title: 'Pulse Animated Icons',
-    author: 'Motionbay',
-    category: 'icons',
-    price: 32,
-    rating: 4.8,
-    sales: 1420,
-    createdAt: '2026-06-16',
-    tags: ['animated', 'lottie', 'svg'],
-    formats: ['Lottie', 'SVG', 'GIF'],
-    colors: ['#00c8ff', '#00e5c3'],
-  },
-  {
-    id: 'frost-preset',
-    title: 'Frost Cool Presets',
-    author: 'Grainlab',
-    category: 'presets',
-    price: 0,
-    rating: 4.2,
-    sales: 4700,
-    createdAt: '2026-02-28',
-    tags: ['cool', 'winter', 'free'],
-    formats: ['LR', 'Mobile'],
-    colors: ['#00c8ff', '#8a8f98'],
-  },
-  {
-    id: 'display-neo',
-    title: 'Neo Display Sans',
-    author: 'Type Foundry Nine',
-    category: 'fonts',
-    price: 45,
-    rating: 4.9,
-    sales: 2110,
-    createdAt: '2026-06-08',
-    tags: ['sans', 'geometric', 'display'],
-    formats: ['OTF', 'Variable', 'WOFF2'],
-    colors: ['#ff2d78', '#ffd23f'],
-  },
-  {
-    id: 'cluster-3d',
-    title: 'Cluster Particle Renders',
-    author: 'Renderhaus',
-    category: '3d',
-    price: 0,
-    rating: 4.1,
-    sales: 3300,
-    createdAt: '2026-03-27',
-    tags: ['particles', 'free', 'render'],
-    formats: ['PNG'],
-    colors: ['#b45cff', '#5b8cff'],
-  },
-  {
-    id: 'vapor-walls',
-    title: 'Vapor Neon Wallpapers',
-    author: 'Deepfield',
-    category: 'wallpapers',
-    price: 12,
+    id: 'colombia-supremo',
+    title: 'Колумбия Супремо',
+    origin: 'Колумбия · Уила',
+    category: 'beans',
+    roast: 'medium',
+    method: 'filter',
+    price: 820,
+    weights: w(820),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-06-30',
+    profile: { acidity: 3, body: 3, sweetness: 4 },
+    process: 'washed',
+    altitude: '1500–1800 м',
+    producer: 'семейные фермы Уилы',
+    description:
+      'Сбалансированный и понятный: карамель, жареный орех, мягкая кислотность. Универсальный герой — хорош и в воронке, и в гейзере. Идеальный «каждодневный» кофе.',
     rating: 4.7,
-    sales: 1660,
+    sales: 2560,
+    createdAt: '2026-05-20',
+    tags: ['карамель', 'орех', 'фильтр'],
+    image: '/img/c9.jpg',
+  },
+  {
+    id: 'brazil-santos',
+    title: 'Бразилия Сантос',
+    origin: 'Бразилия · Серрадо',
+    category: 'beans',
+    roast: 'medium',
+    method: 'espresso',
+    price: 760,
+    weights: w(760),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-07-07',
+    profile: { acidity: 2, body: 4, sweetness: 4 },
+    process: 'natural',
+    altitude: '900–1200 м',
+    description:
+      'Молочный шоколад, фундук и почти нулевая кислотность. База для эспрессо и напитков с молоком: капучино на Сантосе получается десертным без сиропов.',
+    rating: 4.6,
+    sales: 3120,
+    createdAt: '2026-04-30',
+    tags: ['шоколад', 'фундук', 'эспрессо'],
+    image: '/img/c12.jpg',
+  },
+  {
+    id: 'guatemala-antigua',
+    title: 'Гватемала Антигуа',
+    origin: 'Гватемала · Антигуа',
+    category: 'beans',
+    roast: 'medium',
+    method: 'universal',
+    price: 880,
+    weights: w(880),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-06-30',
+    profile: { acidity: 3, body: 4, sweetness: 4 },
+    process: 'washed',
+    altitude: '1500–1700 м',
+    producer: 'вулканические почвы Антигуа',
+    description:
+      'Выращен на вулканических склонах: какао, пряности и лёгкая дымность. Один из тех сортов, что одинаково хороши под любой способ заваривания.',
+    rating: 4.8,
+    sales: 1440,
+    createdAt: '2026-06-05',
+    tags: ['какао', 'специи', 'универсал'],
+    image: '/img/c14.jpg',
+  },
+  {
+    id: 'espresso-blend-dark',
+    title: 'Эспрессо-бленд «Тёмная»',
+    origin: 'Бленд · Бразилия / Индия',
+    category: 'beans',
+    roast: 'dark',
+    method: 'espresso',
+    price: 790,
+    weights: w(790),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-07-07',
+    profile: { acidity: 1, body: 5, sweetness: 3 },
+    process: 'natural',
+    description:
+      'Плотный, тягучий, с горьким шоколадом и долгим послевкусием. Собран для классического эспрессо: густая крема и никакой кислинки. Любимец кофеен-партнёров.',
+    rating: 4.7,
+    sales: 4020,
     createdAt: '2026-06-22',
-    tags: ['neon', 'retro', '4k'],
-    formats: ['4K', '5K', 'Mobile'],
-    colors: ['#ff2d78', '#00c8ff'],
+    tags: ['горький шоколад', 'плотный', 'эспрессо'],
+    image: '/img/c11.jpg',
     featured: true,
   },
   {
-    id: 'grid-ui',
-    title: 'Grid Analytics Components',
-    author: 'Blockwork',
-    category: 'ui-kits',
-    price: 58,
-    rating: 4.6,
-    sales: 1330,
-    createdAt: '2026-06-05',
-    tags: ['charts', 'dashboard', 'figma'],
-    formats: ['Figma', 'React'],
-    colors: ['#00e5c3', '#ffd23f'],
+    id: 'peru-la-libertad',
+    title: 'Перу Ла-Либертад',
+    origin: 'Перу · Ла-Либертад',
+    category: 'beans',
+    roast: 'medium',
+    method: 'filter',
+    price: 850,
+    weights: w(850),
+    grinds: BEAN_GRINDS,
+    roastDate: '2026-06-23',
+    profile: { acidity: 3, body: 3, sweetness: 5 },
+    process: 'honey',
+    altitude: '1800–2000 м',
+    producer: 'органик-сертификат',
+    description:
+      'Органический лот хани-обработки: мёд, жёлтые фрукты, шелковистое тело. Мягкий и сладкий — отличный выбор, если только начинаете знакомство со спешелти.',
+    rating: 4.5,
+    sales: 720,
+    createdAt: '2026-05-08',
+    tags: ['органик', 'мёд', 'фильтр'],
+    image: '/img/c4.jpg',
   },
   {
-    id: 'flat-icons',
-    title: 'Flatline Solid Icons — 480',
-    author: 'Pixelforge',
-    category: 'icons',
-    price: 18,
-    rating: 4.5,
+    id: 'drip-morning',
+    title: 'Дрип-пакеты «Утро»',
+    origin: 'Ассорти · 7 шт',
+    category: 'drip',
+    roast: 'medium',
+    price: 590,
+    roastDate: '2026-07-07',
+    weight: '7 × 12 г',
+    description:
+      'Семь дрипов из разных лотов недели — заваривается прямо в чашке за три минуты. Кофе в командировке, офисе и походе без турки и кофемолки.',
+    rating: 4.6,
     sales: 2870,
-    createdAt: '2026-05-18',
-    tags: ['solid', 'ui', 'svg'],
-    formats: ['SVG', 'Figma', 'Icon Font'],
-    colors: ['#5b8cff', '#00c8ff'],
+    createdAt: '2026-06-18',
+    tags: ['в дорогу', 'ассорти', 'быстро'],
+    image: '/img/c10.jpg',
+  },
+  {
+    id: 'drip-espresso',
+    title: 'Дрип-пакеты «Крепкие»',
+    origin: 'Тёмная обжарка · 10 шт',
+    category: 'drip',
+    roast: 'dark',
+    price: 720,
+    roastDate: '2026-06-30',
+    weight: '10 × 12 г',
+    description:
+      'Десять дрипов тёмной обжарки для тех, кому нужен плотный и бодрящий старт. Шоколадный профиль, минимум кислотности.',
+    rating: 4.4,
+    sales: 980,
+    createdAt: '2026-04-14',
+    tags: ['в дорогу', 'крепкий'],
+    image: '/img/c3.jpg',
+  },
+  {
+    id: 'coldbrew-kit',
+    title: 'Набор для колд-брю',
+    origin: 'Графин 1 л + зерно',
+    category: 'sets',
+    price: 1690,
+    weight: 'графин + 250 г',
+    description:
+      'Всё для холодного кофе дома: графин с фильтром на литр и лот Бразилии под колд-брю. Залили вечером — утром готово. Хит лета и удачный подарок.',
+    rating: 4.7,
+    sales: 640,
+    createdAt: '2026-06-25',
+    tags: ['лето', 'подарок', 'холодный'],
+    image: '/img/c5.jpg',
+    featured: true,
+  },
+  {
+    id: 'chemex-6',
+    title: 'Кемекс, 6 чашек',
+    origin: 'Пуровер · боросиликат',
+    category: 'equipment',
+    price: 2490,
+    description:
+      'Классика пуровера с 1941 года: боросиликатное стекло, деревянная манжета. Чистая, прозрачная чашка и красивый ритуал заваривания.',
+    rating: 4.9,
+    sales: 410,
+    createdAt: '2026-05-28',
+    tags: ['пуровер', 'фильтр', 'стекло'],
+    image: '/img/c2.jpg',
+  },
+  {
+    id: 'hand-grinder',
+    title: 'Ручная кофемолка',
+    origin: 'Керамические жернова',
+    category: 'equipment',
+    price: 3200,
+    description:
+      'Керамические жернова, стальной корпус, 18 кликов настройки помола — от турки до френч-пресса. Компактная: помещается в карман рюкзака.',
+    rating: 4.8,
+    sales: 530,
+    createdAt: '2026-06-02',
+    tags: ['помол', 'сталь', 'в дорогу'],
+    image: '/img/c13.jpg',
+  },
+  {
+    id: 'tasting-set',
+    title: 'Набор «Три помола»',
+    origin: 'Дегустация · 3 × 100 г',
+    category: 'sets',
+    roast: 'light',
+    price: 1290,
+    roastDate: '2026-07-07',
+    weight: '3 × 100 г',
+    description:
+      'Три лота недели по 100 г — Эфиопия, Кения и Колумбия. Лучший способ найти «свой» кофе и понять, чем светлая обжарка отличается по-настоящему.',
+    rating: 4.6,
+    sales: 1180,
+    createdAt: '2026-06-15',
+    tags: ['подарок', 'дегустация', 'ассорти'],
+    image: '/img/c7.jpg',
   },
 ];

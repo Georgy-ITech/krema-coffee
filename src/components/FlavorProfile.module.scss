@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 110px 1fr 36px;
+  align-items: center;
+  gap: 14px;
+}
+
+.label {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
+
+  i {
+    height: 8px;
+    flex: 1;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--hair);
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .on {
+    background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+    border-color: transparent;
+  }
+}
+
+.value {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text);
+  text-align: right;
+}

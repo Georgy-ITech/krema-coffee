@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import BeanMark from './BeanMark';
 import styles from './Footer.module.scss';
 
 export default function Footer() {
@@ -6,35 +8,35 @@ export default function Footer() {
       <div className={`wrap ${styles.inner}`}>
         <div className={styles.brandCol}>
           <div className={styles.brand}>
-            <span className={styles.mark}>O</span>
-            Overlay
+            <BeanMark className={styles.mark} />
+            <span className={styles.word}>КРЕМА</span>
           </div>
-          <p>A curated marketplace for design assets — kits, icons, presets, fonts and 3D.</p>
+          <p>Обжарщики спешелти-кофе. Свежая обжарка небольшими партиями и доставка по всей России.</p>
         </div>
         <div className={styles.cols}>
           <div>
-            <h5>Marketplace</h5>
-            <a href="#catalog">Browse</a>
-            <a href="#catalog">New releases</a>
-            <a href="#catalog">Free assets</a>
+            <h5>Магазин</h5>
+            <Link to="/#catalog">Каталог</Link>
+            <Link to="/?sort=newest#catalog">Новинки</Link>
+            <Link to="/?cat=sets#catalog">Наборы</Link>
           </div>
           <div>
-            <h5>Company</h5>
-            <a href="#catalog">About</a>
-            <a href="#catalog">Authors</a>
-            <a href="#catalog">Licensing</a>
+            <h5>Компания</h5>
+            <Link to="/info/about">Как обжариваем</Link>
+            <Link to="/info/about">О нас</Link>
+            <Link to="/info/about">Оптом</Link>
           </div>
           <div>
-            <h5>Support</h5>
-            <a href="#catalog">Help center</a>
-            <a href="#catalog">Contact</a>
-            <a href="#catalog">Status</a>
+            <h5>Помощь</h5>
+            <Link to="/info/delivery">Доставка</Link>
+            <Link to="/info/delivery">Оплата</Link>
+            <Link to="/info/delivery">Контакты</Link>
           </div>
         </div>
       </div>
       <div className={`wrap ${styles.bottom}`}>
-        <span>© 2026 Overlay · concept by Georgy</span>
-        <span>Built with React + Vite</span>
+        <span>© 2026 КРЕМА · обжарщики кофе</span>
+        <span>Концепт: Georgy · React + Vite</span>
       </div>
     </footer>
   );

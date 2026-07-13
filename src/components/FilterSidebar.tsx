@@ -1,6 +1,6 @@
 import { useMemo, type CSSProperties } from 'react';
-import { CATEGORIES, products, type Category } from '../data/products';
-import { PRICE_MAX, type FilterState, type PriceMode } from '../hooks/useFilters';
+import { CATEGORIES, products, ROASTS, type Category } from '../data/products';
+import { PRICE_MAX, type FilterState, type MethodFilter, type RoastFilter } from '../hooks/useFilters';
 import styles from './FilterSidebar.module.scss';
 
 interface Props {
@@ -11,13 +11,19 @@ interface Props {
   activeCount: number;
 }
 
-const PRICE_MODES: { id: PriceMode; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'free', label: 'Free' },
-  { id: 'paid', label: 'Paid' },
+const ROAST_OPTIONS: { id: RoastFilter; label: string }[] = [
+  { id: 'any', label: 'Любая' },
+  ...ROASTS.map((r) => ({ id: r.id as RoastFilter, label: r.label })),
 ];
 
-const RATINGS = [0, 4, 4.5];
+const METHOD_OPTIONS: { id: MethodFilter; label: string }[] = [
+  { id: 'any', label: 'Любой' },
+  { id: 'espresso', label: 'Эспрессо' },
+  { id: 'filter', label: 'Фильтр' },
+  { id: 'universal', label: 'Универсал' },
+];
+
+const RATINGS = [0, 4.5, 4.8];
 
 export default function FilterSidebar({ state, set, toggleCategory, reset, activeCount }: Props) {
   const counts = useMemo(() => {
@@ -28,7 +34,7 @@ export default function FilterSidebar({ state, set, toggleCategory, reset, activ
   }, []);
 
   return (
-    <aside className={styles.sidebar} aria-label="Filters">
+    <aside className={styles.sidebar} aria-label="Фильтры">
       <div className={styles.search}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           <circle cx="11" cy="11" r="7" />
@@ -36,15 +42,15 @@ export default function FilterSidebar({ state, set, toggleCategory, reset, activ
         </svg>
         <input
           type="search"
-          placeholder="Search assets…"
+          placeholder="Поиск кофе…"
           value={state.search}
           onChange={(e) => set('search', e.target.value)}
-          aria-label="Search assets"
+          aria-label="Поиск по каталогу"
         />
       </div>
 
       <section className={styles.group}>
-        <h4 className={styles.label}>Category</h4>
+        <h4 className={styles.label}>Категория</h4>
         <ul className={styles.checks}>
           {CATEGORIES.map((c) => (
             <li key={c.id}>
@@ -64,41 +70,59 @@ export default function FilterSidebar({ state, set, toggleCategory, reset, activ
       </section>
 
       <section className={styles.group}>
-        <h4 className={styles.label}>Price</h4>
+        <h4 className={styles.label}>Обжарка</h4>
         <div className={styles.segment} role="tablist">
-          {PRICE_MODES.map((m) => (
+          {ROAST_OPTIONS.map((m) => (
             <button
               key={m.id}
               role="tab"
-              aria-selected={state.priceMode === m.id}
-              className={state.priceMode === m.id ? styles.segActive : ''}
-              onClick={() => set('priceMode', m.id)}
+              aria-selected={state.roast === m.id}
+              className={state.roast === m.id ? styles.segActive : ''}
+              onClick={() => set('roast', m.id)}
             >
               {m.label}
             </button>
           ))}
         </div>
+      </section>
 
-        <div className={styles.slider}>
-          <div className={styles.sliderTop}>
-            <span>Max price</span>
-            <b>{state.maxPrice >= PRICE_MAX ? 'Any' : `$${state.maxPrice}`}</b>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={PRICE_MAX}
-            step={1}
-            value={state.maxPrice}
-            onChange={(e) => set('maxPrice', Number(e.target.value))}
-            aria-label="Maximum price"
-            style={{ '--fill': `${(state.maxPrice / PRICE_MAX) * 100}%` } as CSSProperties}
-          />
+      <section className={styles.group}>
+        <h4 className={styles.label}>Метод заваривания</h4>
+        <div className={styles.segment} role="tablist">
+          {METHOD_OPTIONS.map((m) => (
+            <button
+              key={m.id}
+              role="tab"
+              aria-selected={state.method === m.id}
+              className={state.method === m.id ? styles.segActive : ''}
+              onClick={() => set('method', m.id)}
+            >
+              {m.label}
+            </button>
+          ))}
         </div>
       </section>
 
       <section className={styles.group}>
-        <h4 className={styles.label}>Rating</h4>
+        <div className={styles.sliderTop}>
+          <h4 className={styles.label}>Цена до</h4>
+          <b>{state.maxPrice >= PRICE_MAX ? 'любая' : `${state.maxPrice.toLocaleString('ru-RU')} ₽`}</b>
+        </div>
+        <input
+          className={styles.range}
+          type="range"
+          min={0}
+          max={PRICE_MAX}
+          step={50}
+          value={state.maxPrice}
+          onChange={(e) => set('maxPrice', Number(e.target.value))}
+          aria-label="Максимальная цена"
+          style={{ '--fill': `${(state.maxPrice / PRICE_MAX) * 100}%` } as CSSProperties}
+        />
+      </section>
+
+      <section className={styles.group}>
+        <h4 className={styles.label}>Рейтинг</h4>
         <div className={styles.pills}>
           {RATINGS.map((r) => (
             <button
@@ -106,14 +130,14 @@ export default function FilterSidebar({ state, set, toggleCategory, reset, activ
               className={state.minRating === r ? styles.pillActive : styles.pill}
               onClick={() => set('minRating', r)}
             >
-              {r === 0 ? 'Any' : `${r}+`}
+              {r === 0 ? 'Любой' : `${r.toString().replace('.', ',')}+`}
             </button>
           ))}
         </div>
       </section>
 
       <button className={styles.reset} onClick={reset} disabled={activeCount === 0}>
-        Clear filters{activeCount > 0 ? ` (${activeCount})` : ''}
+        Сбросить фильтры{activeCount > 0 ? ` (${activeCount})` : ''}
       </button>
     </aside>
   );

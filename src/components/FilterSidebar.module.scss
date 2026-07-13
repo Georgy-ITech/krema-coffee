@@ -104,7 +104,7 @@
     top: 2.5px;
     width: 5px;
     height: 9px;
-    border: solid #150109;
+    border: solid #1c1206;
     border-width: 0 2.4px 2.4px 0;
     transform: rotate(45deg);
   }
@@ -129,48 +129,46 @@
 
 .segment {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  padding: 4px;
-  border-radius: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  padding: 5px;
+  border-radius: 13px;
   background: var(--surface-2);
   border: 1px solid var(--border);
 
   button {
-    padding: 8px 0;
+    padding: 9px 0;
     border-radius: 9px;
     font-family: var(--fd);
     font-weight: 600;
     font-size: 0.84rem;
     color: var(--muted);
     transition: color 0.18s ease, background 0.18s ease;
+
+    &:hover {
+      color: var(--text);
+    }
   }
 }
 
 .segActive {
-  color: #150109 !important;
+  color: #1c1206 !important;
   background: var(--accent);
-}
-
-.slider {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .sliderTop {
   display: flex;
   justify-content: space-between;
-  font-size: 0.84rem;
-  color: var(--muted);
+  align-items: baseline;
 
   b {
     color: var(--accent);
     font-family: var(--fd);
+    font-size: 0.84rem;
   }
 }
 
-.slider input[type='range'] {
+.range {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -229,7 +227,7 @@
 .pillActive {
   background: var(--accent);
   border-color: var(--accent);
-  color: #150109;
+  color: #1c1206;
 }
 
 .reset {

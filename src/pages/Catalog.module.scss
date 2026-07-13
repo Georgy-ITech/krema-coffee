@@ -1,42 +1,9 @@
-.hero {
-  padding: 64px 0 44px;
-  text-align: center;
-}
-
-.eyebrow {
-  display: inline-block;
-  font-family: var(--fd);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.title {
-  font-family: var(--fd);
-  font-weight: 800;
-  font-size: clamp(2.4rem, 5.4vw, 4.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  margin: 18px auto 0;
-  max-width: 16ch;
-  text-wrap: balance;
-}
-
-.g {
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.sub {
-  color: var(--muted);
-  font-size: 1.08rem;
-  line-height: 1.6;
-  margin: 20px auto 0;
-  max-width: 56ch;
+.strip {
+  padding: 22px 0;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+  background: var(--surface);
+  margin-bottom: 46px;
 }
 
 .layout {
@@ -44,7 +11,7 @@
   grid-template-columns: 264px 1fr;
   gap: 26px;
   align-items: start;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
   scroll-margin-top: var(--header-h);
 }
 
@@ -57,17 +24,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-.resultCount {
-  font-size: 0.95rem;
-  color: var(--muted);
+.heading {
+  font-family: var(--fdisplay);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.02em;
 
-  b {
-    font-family: var(--fd);
-    font-weight: 800;
-    color: var(--text);
+  span {
+    color: var(--dim);
+    font-weight: 600;
   }
 }
 
@@ -78,12 +46,13 @@
   gap: 8px;
   padding: 0 12px 0 14px;
   height: 42px;
-  border-radius: 11px;
+  border-radius: 12px;
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--muted);
   font-size: 0.86rem;
   transition: border-color 0.2s ease;
+  flex: none;
 
   &:hover {
     border-color: rgba(var(--accent-rgb), 0.4);
@@ -115,7 +84,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 22px;
 }
 
 .empty {
@@ -126,13 +95,13 @@
   background: var(--surface);
 
   h3 {
-    font-family: var(--fd);
+    font-family: var(--fdisplay);
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   p {
     color: var(--muted);
-    margin: 8px 0 20px;
+    margin: 10px 0 22px;
   }
   button {
     padding: 11px 22px;
@@ -140,7 +109,7 @@
     font-family: var(--fd);
     font-weight: 700;
     font-size: 0.88rem;
-    color: #150109;
+    color: #1c1206;
     background: var(--accent);
     transition: filter 0.2s ease;
 
