@@ -1,6 +1,9 @@
 .hero {
   position: relative;
-  padding: 54px 0 64px;
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  align-items: center;
+  padding: 48px 0 56px;
   overflow: hidden;
 }
 
@@ -20,6 +23,7 @@
 .inner {
   position: relative;
   z-index: 1;
+  width: 100%;
   display: grid;
   grid-template-columns: 1.04fr 0.96fr;
   gap: 48px;
