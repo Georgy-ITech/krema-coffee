@@ -58,7 +58,7 @@
   margin: 24px 0 0;
   transition-delay: 0.06s;
   overflow-wrap: break-word;
-  hyphens: auto;
+  text-wrap: balance;
 }
 
 .g {
@@ -275,6 +275,9 @@
   .inner {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  .title {
+    max-width: 600px;
   }
   .visual {
     max-width: 460px;

@@ -40,7 +40,14 @@ export default function Hero() {
 
         <div className={`${styles.visual} reveal`}>
           <div className={styles.frame}>
-            <img src={featured.image} alt={featured.title} />
+            <img
+              src="/img/hero.jpg"
+              alt="Свежеобжаренный кофе КРЕМА"
+              width={1400}
+              height={1750}
+              loading="eager"
+              fetchPriority="high"
+            />
             <span className={styles.stamp}>freshly<br />roasted</span>
           </div>
 
