@@ -51,13 +51,15 @@
 .title {
   font-family: var(--fdisplay);
   font-weight: 800;
-  font-size: clamp(2rem, 5.6vw, 5rem);
+  // Кегль ограничен так, чтобы самое длинное слово («раскрывается») влезало
+  // в колонку грида целиком: она занимает ~0.48 ширины окна, а слово — ~10.7
+  // размера шрифта. Отсюда потолок 4.2vw; выше слово переносится посреди букв.
+  font-size: clamp(1.75rem, 4.2vw, 5rem);
   line-height: 0.98;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   margin: 24px 0 0;
   transition-delay: 0.06s;
-  overflow-wrap: break-word;
   text-wrap: balance;
 }
 
@@ -290,7 +292,9 @@
 
 @media (max-width: 480px) {
   .title {
-    font-size: clamp(1.9rem, 9vw, 2.6rem);
+    // На узких экранах колонка почти во всю ширину, но и запаса нет:
+    // выше 7.2vw «раскрывается» перестаёт помещаться в строку.
+    font-size: clamp(1.4rem, 7.2vw, 2.4rem);
   }
   .cta {
     flex-direction: column;
