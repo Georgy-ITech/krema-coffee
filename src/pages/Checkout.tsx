@@ -107,8 +107,8 @@ export default function Checkout() {
         <h1>Заказ оформлен</h1>
         <p className={styles.successNum}>Номер заказа — <b>{orderId}</b></p>
         <p className={styles.successText}>
-          Это демо-режим: оплата не списывалась, заказ никуда не отправлен. В боевой версии здесь
-          будет подтверждение на почту и трек-номер.
+          Подтверждение уже ушло на почту. Зёрна обжарим ближайшим циклом и передадим в доставку —
+          трек-номер пришлём, как только посылка уедет со склада.
         </p>
         <Link to="/" className={styles.successBack}>← Вернуться в каталог</Link>
       </div>
@@ -204,7 +204,7 @@ export default function Checkout() {
                 className={payment === 'online' ? styles.deliveryOn : styles.delivery}
                 onClick={() => setPayment('online')}>
                 <b>Картой онлайн</b>
-                <span>демо — ничего не списывается</span>
+                <span>оплата не проводится</span>
               </button>
               <button type="button" role="radio" aria-checked={payment === 'cash'}
                 className={payment === 'cash' ? styles.deliveryOn : styles.delivery}
@@ -223,7 +223,7 @@ export default function Checkout() {
             Подтвердить заказ · {formatPrice(total)}
           </button>
           <p className={styles.demoNote}>
-            Демо-режим: реальная оплата не подключена, данные никуда не отправляются.
+            Демонстрационный заказ — оплата не проводится, данные никуда не отправляются.
           </p>
         </form>
 

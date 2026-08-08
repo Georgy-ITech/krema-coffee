@@ -35,8 +35,11 @@ export default function Footer() {
         </div>
       </div>
       <div className={`wrap ${styles.bottom}`}>
-        <span>© 2026 КРЕМА · обжарщики кофе</span>
-        <span>Концепт: Georgy · React + Vite</span>
+        <span>© 2026 КРЕМА · Концепт-проект</span>
+        <span>
+          Дизайн и разработка —{' '}
+          <a href="https://kwork.ru/user/georgy_tech" target="_blank" rel="noopener">Georgy_Tech</a>
+        </span>
       </div>
     </footer>
   );

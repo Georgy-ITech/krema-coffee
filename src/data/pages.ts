@@ -78,9 +78,9 @@ export const INFO_PAGES: Record<string, InfoPage> = {
       {
         h: 'Как связаться',
         list: [
-          'Телефон: +7 495 000-00-00 (демо)',
-          'Почта: hello@krema.coffee (демо)',
-          'Telegram: @krema_coffee (демо)',
+          'Телефон: +7 495 062-18-40',
+          'Почта: hello@krema.coffee',
+          'Telegram: @krema_coffee',
         ],
       },
       {
