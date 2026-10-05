@@ -23,7 +23,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm install, а не ci: lock-файл собран на Windows, и в нём нет пакетов,
+      # которые нужны сборщику только на Linux.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
       # Внутренние адреса (/info/about, /checkout) для GitHub Pages — несуществующие файлы;
       # 404.html с тем же приложением открывает их, дальше маршрут разбирает React Router.
