@@ -27,9 +27,7 @@ jobs:
       # которые нужны сборщику только на Linux.
       - run: npm install --no-audit --no-fund
       - run: npm run build
-      # Внутренние адреса (/info/about, /checkout) для GitHub Pages — несуществующие файлы;
-      # 404.html с тем же приложением открывает их, дальше маршрут разбирает React Router.
-      - run: cp dist/index.html dist/404.html
+      - run: node scripts/pages-routes.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
