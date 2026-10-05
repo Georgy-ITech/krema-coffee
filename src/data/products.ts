@@ -105,7 +105,7 @@ export const products: Product[] = [
     sales: 1840,
     createdAt: '2026-06-28',
     tags: ['цитрус', 'жасмин', 'фильтр'],
-    image: '/img/c8.jpg',
+    image: import.meta.env.BASE_URL + 'img/c8.jpg',
     featured: true,
   },
   {
@@ -129,7 +129,7 @@ export const products: Product[] = [
     sales: 1210,
     createdAt: '2026-06-12',
     tags: ['чёрная смородина', 'ягоды', 'фильтр'],
-    image: '/img/c1.jpg',
+    image: import.meta.env.BASE_URL + 'img/c1.jpg',
   },
   {
     id: 'colombia-supremo',
@@ -152,7 +152,7 @@ export const products: Product[] = [
     sales: 2560,
     createdAt: '2026-05-20',
     tags: ['карамель', 'орех', 'фильтр'],
-    image: '/img/c9.jpg',
+    image: import.meta.env.BASE_URL + 'img/c9.jpg',
   },
   {
     id: 'brazil-santos',
@@ -174,7 +174,7 @@ export const products: Product[] = [
     sales: 3120,
     createdAt: '2026-04-30',
     tags: ['шоколад', 'фундук', 'эспрессо'],
-    image: '/img/c12.jpg',
+    image: import.meta.env.BASE_URL + 'img/c12.jpg',
   },
   {
     id: 'guatemala-antigua',
@@ -197,7 +197,7 @@ export const products: Product[] = [
     sales: 1440,
     createdAt: '2026-06-05',
     tags: ['какао', 'специи', 'универсал'],
-    image: '/img/c14.jpg',
+    image: import.meta.env.BASE_URL + 'img/c14.jpg',
   },
   {
     id: 'espresso-blend-dark',
@@ -218,7 +218,7 @@ export const products: Product[] = [
     sales: 4020,
     createdAt: '2026-06-22',
     tags: ['горький шоколад', 'плотный', 'эспрессо'],
-    image: '/img/c11.jpg',
+    image: import.meta.env.BASE_URL + 'img/c11.jpg',
     featured: true,
   },
   {
@@ -242,7 +242,7 @@ export const products: Product[] = [
     sales: 720,
     createdAt: '2026-05-08',
     tags: ['органик', 'мёд', 'фильтр'],
-    image: '/img/c4.jpg',
+    image: import.meta.env.BASE_URL + 'img/c4.jpg',
   },
   {
     id: 'drip-morning',
@@ -259,7 +259,7 @@ export const products: Product[] = [
     sales: 2870,
     createdAt: '2026-06-18',
     tags: ['в дорогу', 'ассорти', 'быстро'],
-    image: '/img/c10.jpg',
+    image: import.meta.env.BASE_URL + 'img/c10.jpg',
   },
   {
     id: 'drip-espresso',
@@ -276,7 +276,7 @@ export const products: Product[] = [
     sales: 980,
     createdAt: '2026-04-14',
     tags: ['в дорогу', 'крепкий'],
-    image: '/img/c3.jpg',
+    image: import.meta.env.BASE_URL + 'img/c3.jpg',
   },
   {
     id: 'coldbrew-kit',
@@ -291,7 +291,7 @@ export const products: Product[] = [
     sales: 640,
     createdAt: '2026-06-25',
     tags: ['лето', 'подарок', 'холодный'],
-    image: '/img/c5.jpg',
+    image: import.meta.env.BASE_URL + 'img/c5.jpg',
     featured: true,
   },
   {
@@ -306,7 +306,7 @@ export const products: Product[] = [
     sales: 410,
     createdAt: '2026-05-28',
     tags: ['пуровер', 'фильтр', 'стекло'],
-    image: '/img/c2.jpg',
+    image: import.meta.env.BASE_URL + 'img/c2.jpg',
   },
   {
     id: 'hand-grinder',
@@ -320,7 +320,7 @@ export const products: Product[] = [
     sales: 530,
     createdAt: '2026-06-02',
     tags: ['помол', 'сталь', 'в дорогу'],
-    image: '/img/c13.jpg',
+    image: import.meta.env.BASE_URL + 'img/c13.jpg',
   },
   {
     id: 'tasting-set',
@@ -337,6 +337,6 @@ export const products: Product[] = [
     sales: 1180,
     createdAt: '2026-06-15',
     tags: ['подарок', 'дегустация', 'ассорти'],
-    image: '/img/c7.jpg',
+    image: import.meta.env.BASE_URL + 'img/c7.jpg',
   },
 ];

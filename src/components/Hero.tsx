@@ -41,7 +41,7 @@ export default function Hero() {
         <div className={`${styles.visual} reveal`}>
           <div className={styles.frame}>
             <img
-              src="/img/hero.jpg"
+              src={`${import.meta.env.BASE_URL}img/hero.jpg`}
               alt="Свежеобжаренный кофе КРЕМА"
               width={1400}
               height={1750}

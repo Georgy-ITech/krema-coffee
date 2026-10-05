@@ -6,7 +6,7 @@ React + Vite + TypeScript магазин обжарщиков спешелти-�
 
 Реализовано по [техническому заданию](docs/TZ-KREMA.md) (анализ рынка → ТЗ → реализация).
 
-🔗 **Демо:** [krema-coffee.vercel.app](https://krema-coffee.vercel.app)
+🔗 **Демо:** [georgy-itech.github.io/krema-coffee](https://georgy-itech.github.io/krema-coffee/)
 
 > AI-инструменты использовались для ускорения разработки. Архитектура, проверки,
 > продуктовые решения и финальная реализация — авторская работа.
